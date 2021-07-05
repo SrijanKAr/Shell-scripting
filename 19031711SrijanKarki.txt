@@ -1,0 +1,259 @@
+#!/bin/bash
+figlet "Football World"
+sleep 1
+secretkey=004
+counter=1
+
+# Defining a input function to ask user the secret key
+input()
+{
+        echo -e "Enter the secret key: \c"
+        read key
+}
+# To check whether the user have enter the two parameters in the right order.
+if  [ $# = 2 ]
+        then
+                echo
+                input
+        else
+                echo
+                echo -e "\e[31m-----SORRY could not enter the program------\e[0m"
+                echo "   You have to enter two parameters! Your first name on first parameter and your ID on second parameter."
+                echo
+                echo -e "\e[33m----!!!!Terminating program!!!!----\e[0m"
+                sleep 1
+                echo -e ".\c"
+                sleep 1
+                echo -e ".\c"
+                sleep 1
+                echo "."
+                sleep 1
+                echo
+                echo "Program terminated successfully."
+                exit 1
+fi
+#To check whether the first parameter is username and second parameter is ID
+until [[ "$1" =~ ^[A-Za-z]+$ && "$2" =~ ^[+-]?[0-9]+$ ]]
+        do
+                echo
+                figlet "INVALID PARAMETER"
+                sleep 1
+                echo
+                echo -e "\e[31mYou have to enter two parameter while entering the program. \e[0m"
+                sleep 1
+        exit
+done
+#Defining a loop to check where the secretkey is valid or not
+while [ $counter -lt 5  ]
+        do
+                if [ $secretkey = $key ]
+                        then
+                                echo
+                                echo -e "\e[1;36mLoading...................................Loading 100%\e[0m" | pv -qL 15
+                                sleep 1.8
+                                echo -e "\e[31m Verifiying all the details.......... \e[0m"
+                                sleep 1
+                                echo -e "\e[33m Key..........................mathced \e[0m"
+                                sleep 1
+                                echo -e "\e[33m London Id....................matched \e[0m"
+                                sleep 1
+                                echo -e "\e[1;32m ------------Verified----------------\e[0m"
+                                sleep 1
+                                figlet "Hello"
+                                sleep 1
+                                clear
+                                echo
+                                echo "========================================="
+                                echo "  WELCOME TO THE PROGRAM!"
+                                echo
+                                echo "  Name: "$1" "
+                                echo "  London ID: "$2" "
+                                echo "  Date: $(date +'%m/%d5/%Y')  "
+                                echo "  Time: $(date +'%r') "
+                                echo
+                                echo "========================================="
+                                sleep 1
+                                break
+                else
+                        echo  -e "\e[31m Invalid Secret Key! Please try again. \e[0m"
+                        input
+                        counter=`expr $counter + 1`
+                fi
+done
+#Defining a loop to terminate the program when the user has enter the wrong password for 5 times.
+while [ $counter = 5 ]
+        do
+                echo "Sorry,You entered wrong password for 5 times!"
+                echo
+                echo -e "\e[31m-----!!!!!Terminating program!!!!!-----\e[0m"
+                sleep 0.7
+                echo -e ".\c"
+                sleep 0.7
+                echo -e ".\c"
+                sleep 0.7
+                echo "."
+                sleep 0.7
+                echo
+                echo "Program terminated successfully."
+                exit 1
+        done
+#Defining a function to choice the best team
+countrySelect()
+{
+        echo
+        echo "List of the countries that play football along with their country code."| pv -qL 15
+        echo "     ----------------------------------- "
+        echo "     |  Country Name  |  Country Code  | "
+        echo "     ----------------------------------- "
+        echo "     |   Brazil       |      BRI       | "
+        echo "     |   Argentina    |      ARG       | "
+        echo "     |   Nepal        |      NEP       | "
+        echo "     |   China        |      CHI       | "
+        echo "     |   England      |      ENG       | "
+        echo "     ----------------------------------- "
+
+        #Defining a function to ask user to guess the best team
+        bestTeam()
+        {
+                echo
+                echo -e "Please guess the best team(Enter team code to guess): \c"
+                read code
+                sleep 0.5
+                echo
+        }
+        best=ARG
+        code=111
+        until [ $best == $code ]
+                do
+                        bestTeam
+                        if [ $best == $code ]
+                                then
+                                        echo "Congratulation! You have choose the best team of the football." | pv -qL 15
+                                        echo "+--------------------------------------------------------------------+"
+                                        echo "|                      Some Facts about Argentina                    |"
+                                        echo "+--------------------------------------------------------------------+"
+                                        echo "|                                                                    |"
+                                        echo "|1. Argentina is one of the favourite football country team in Nepal.|"
+                                        echo "|2. The current captain of Argentina is Lionel Messi.                |"
+                                        echo "|3. Argentina has won worldcup 2 times.                              |"
+                                        echo "|                                                                    |"
+                                        echo "+--------------------------------------------------------------------+"
+                                else
+                                        echo "Opps! Your guess is wrong.Try again:"
+                                        echo
+                        fi
+                done
+#Defining a function to user the user three players
+        players()
+        {
+                echo
+                echo "      Star players of respective team: " | pv -qL 10
+                echo "     ------------------------------------ "
+                echo "     |  Player Name    |  Player Code   | "
+                echo "     ------------------------------------ "
+                echo "     |  Lionel Messi   |      LM        | "
+                echo "     |  Neymar Junior  |      NJ        | "
+                echo "     |  Kiran Chemjong |      KC        | "
+                echo "     |  Zheng Zhi      |      ZZ        | "
+                echo "     |  Harry Kane     |      HK        | "
+                echo "     ------------------------------------ "
+                echo
+
+                players=('LM' 'NJ' 'KC' 'ZZ' 'HK')
+                while :
+                do
+                        echo -e "Please choose three players and enter their codes: \c"
+                        read player1 player2 player3
+                        if [[ "$player1" == "$player2" || "$player2" == "$player3" || "$player1" == "$player3" ]]
+                                then
+                                        echo "Invalid Input! Please enter three codes of players separated by space and must be unique."
+                                        echo
+                                elif [[ -z $player1 || -z $player2 || -z $player3 ]]
+                                then
+                                        echo "Invalid Input! Please enter three codes of players separated by space and must be unique."
+                                        echo
+                                elif [[ ! "${players[@]}" =~ "${player1}" || ! "${players[@]}" =~ "${player2}" || ! "${players[@]}" =~ "${player3}" ]]
+                                then
+                                        echo "Invalid Input! Please enter three codes of players separated by space and must be unique."
+                                        echo
+                                else
+                                        break
+                        fi
+                done
+                PS3="Now please choose on of the best player for details: "
+                select PLAYER in $player1 $player2 $player3
+                        do
+                                if [ -z "$PLAYER" ]
+                                        then
+                                                echo
+                                                echo -e "\e[33m Invalid Input!!!,Please try again: \e[0m"
+                                                echo
+                                                continue
+                                elif [[ "$PLAYER" == "LM" ]]
+                                        then
+                                                echo "             Some Facts About Messi:"| pv -qL 10
+                                                sleep 0.5
+                                                cat LionelMessi
+                                elif [[ "$PLAYER" == "NJ" ]]
+                                        then
+                                                echo "             Some Facts About Neymar:"| pv -qL 10
+                                                sleep 0.7
+                                                cat Neymar
+                                elif [[ "$PLAYER" == "KC" ]]
+                                        then
+                                                echo "             Some Facts About Kiran:" | pv -qL 10
+                                                sleep 0.5
+                                                cat Kiran
+                                elif [[ "$PLAYER" != "LM" && "$PLAYER" != "NJ" && "$PLAYER" != "KC" ]]
+                                then
+                                        echo
+                                        echo -e "\e[33m---File Not Found! Please select either LM, NJ, KC.---\e[0m"
+                                        echo
+                                        echo -e "Redirecting to step 4.\c"
+                                        sleep 0.5
+                                        echo -e ".\c"
+                                        sleep 0.5
+                                        echo "."
+                                        players
+                        fi
+                break
+                done
+}
+}
+countrySelect
+players
+#Defining a function to ask whether the user want to repeat the program or not
+continuous()
+{
+        echo
+        echo -e "Do you again want to repeat the process from Step 4? (Y/N): \c"
+        read ans
+        ans=${ans^^}
+        if [ "$ans" = "Y" ]
+                then
+                        countrySelect
+                        players
+                        continuous
+        elif [ "$ans" = "N" ]
+                then
+                        echo
+                        echo -e "\e[31m -----!!!!!Terminating program!!!!!!----- \e[0m"
+                        sleep 0.6
+                        echo -e ".\c"
+                        sleep 0.6
+                        echo -e ".\c"
+                        sleep 0.6
+                        echo -e "."
+                        sleep 0.6
+                        echo -e ".\c"
+                        sleep 0.6
+                        echo -e "Program terminated successfully."
+                        echo
+                        figlet "Thank You"
+                        exit 1
+        else
+                echo "Invalid Option."
+                continuous
+        fi
+}
+continuous
